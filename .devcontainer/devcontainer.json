@@ -1,10 +1,10 @@
 {
-    "name": "Container 1",
+    "name": "librenms",
     "dockerComposeFile": [
-        "docker-compose.yml"
+        "compose.yml"
     ],
-    "service": "dev",
-    "workspaceFolder": "/workspace",
+    "service": "librenms",
+    "workspaceFolder": "/opt/librenms",
     "customizations": {
         "vscode": {
             "extensions": [
