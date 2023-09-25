@@ -1,0 +1,129 @@
+BDCOM-OPTICAL-MIB DEFINITIONS ::= BEGIN
+
+    IMPORTS
+        MODULE-IDENTITY,
+        OBJECT-TYPE FROM SNMPv2-SMI
+        DisplayString FROM RFC1213-MIB
+        bdMgmt FROM BDCOM-SMI;
+
+    bdOpticalMIB MODULE-IDENTITY
+        LAST-UPDATED "20230922"
+        DESCRIPTION ""
+        ::= { bdMgmt 63 }
+
+    bdOpticalObjects OBJECT IDENTIFIER ::= { bdOpticalMIB 1 }
+
+
+    IDiv100 ::= TEXTUAL-CONVENTION
+        DISPLAY-HINT "d-2"
+        STATUS current
+        DESCRIPTION "/100"
+        SYNTAX Integer32 (-2147483648..2147483647)
+
+    IDiv1000 ::= TEXTUAL-CONVENTION
+        DISPLAY-HINT "d-3"
+        STATUS current
+        DESCRIPTION "/1000"
+        SYNTAX Integer32 (-2147483648..2147483647)
+
+    IDiv256 ::= TEXTUAL-CONVENTION
+        STATUS current
+        DESCRIPTION "/256"
+        SYNTAX Integer32 (-2147483648..2147483647)
+
+
+    bdOpticalTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF BdOpticalEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION ""
+        ::= { bdOpticalObjects 7 }
+
+    bdOpticalEntry OBJECT-TYPE
+        SYNTAX BdOpticalEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION ""
+        INDEX { bdOpticalIndex }
+        ::= { bdOpticalTable 1 }
+
+    BdOpticalEntry ::= SEQUENCE {
+        bdOpticalIndex INTEGER,
+        bdOpticalRxPower IDiv100,
+        bdOpticalTxPower IDiv100,
+        bdOpticalSupplyVoltage IDiv1000,
+        bdOpticalVendorName DisplayString,
+        bdOpticalWavelength Gauge32,
+        bdOpticalSerial DisplayString,
+    }
+
+    bdOpticalIndex OBJECT-TYPE
+        SYNTAX INTEGER
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 1 }
+
+    bdOpticalRxPower OBJECT-TYPE
+        SYNTAX IDiv100
+        UNITS "dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 2 }
+
+    bdOpticalTxPower OBJECT-TYPE
+        SYNTAX IDiv100
+        UNITS "dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 3 }
+
+    bdOpticalTemperature OBJECT-TYPE
+        SYNTAX IDiv256
+        UNITS "C"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 4 }
+
+    bdOpticalSupplyVoltage OBJECT-TYPE
+        SYNTAX IDiv1000
+        UNITS "V"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 5 }
+
+    bdOpticalVendorName OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 7 }
+
+    bdOpticalRange OBJECT-TYPE
+        SYNTAX Gauge32
+        UNITS "m"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 18 }
+
+    bdOpticalWavelength OBJECT-TYPE
+        SYNTAX Gauge32
+        UNITS "nm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 19 }
+
+    bdOpticalSerial OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { bdOpticalEntry 23 }
+
+END
