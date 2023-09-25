@@ -1,0 +1,129 @@
+FS-OPTICAL-MIB DEFINITIONS ::= BEGIN
+
+    IMPORTS
+        MODULE-IDENTITY,
+        OBJECT-TYPE FROM SNMPv2-SMI
+        DisplayString FROM RFC1213-MIB
+        fs FROM FS-MIB;
+
+    fsOpticalMIB MODULE-IDENTITY
+        LAST-UPDATED "20230925"
+        DESCRIPTION ""
+        ::= { fs 9 63 }
+
+    fsOpticalObjects OBJECT IDENTIFIER ::= { fsOpticalMIB 1 }
+
+
+    IDiv100 ::= TEXTUAL-CONVENTION
+        DISPLAY-HINT "d-2"
+        STATUS current
+        DESCRIPTION "/100"
+        SYNTAX Integer32 (-2147483648..2147483647)
+
+    IDiv1000 ::= TEXTUAL-CONVENTION
+        DISPLAY-HINT "d-3"
+        STATUS current
+        DESCRIPTION "/1000"
+        SYNTAX Integer32 (-2147483648..2147483647)
+
+    IDiv256 ::= TEXTUAL-CONVENTION
+        STATUS current
+        DESCRIPTION "/256"
+        SYNTAX Integer32 (-2147483648..2147483647)
+
+
+    fsOpticalTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF FsOpticalEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION ""
+        ::= { fsOpticalObjects 7 }
+
+    fsOpticalEntry OBJECT-TYPE
+        SYNTAX FsOpticalEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION ""
+        INDEX { fsOpticalIndex }
+        ::= { fsOpticalTable 1 }
+
+    FsOpticalEntry ::= SEQUENCE {
+        fsOpticalIndex INTEGER,
+        fsOpticalRxPower IDiv100,
+        fsOpticalTxPower IDiv100,
+        fsOpticalSupplyVoltage IDiv1000,
+        fsOpticalVendorName DisplayString,
+        fsOpticalWavelength Gauge32,
+        fsOpticalSerial DisplayString,
+    }
+
+    fsOpticalIndex OBJECT-TYPE
+        SYNTAX INTEGER
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 1 }
+
+    fsOpticalRxPower OBJECT-TYPE
+        SYNTAX IDiv100
+        UNITS "dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 2 }
+
+    fsOpticalTxPower OBJECT-TYPE
+        SYNTAX IDiv100
+        UNITS "dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 3 }
+
+    fsOpticalTemperature OBJECT-TYPE
+        SYNTAX IDiv256
+        UNITS "C"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 4 }
+
+    fsOpticalSupplyVoltage OBJECT-TYPE
+        SYNTAX IDiv1000
+        UNITS "V"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 5 }
+
+    fsOpticalVendorName OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 7 }
+
+    fsOpticalRange OBJECT-TYPE
+        SYNTAX Gauge32
+        UNITS "m"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 18 }
+
+    fsOpticalWavelength OBJECT-TYPE
+        SYNTAX Gauge32
+        UNITS "nm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 19 }
+
+    fsOpticalSerial OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { fsOpticalEntry 23 }
+
+END
